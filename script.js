@@ -21,11 +21,11 @@ directionalLight.shadow.camera.far = 20;
 scene.add(directionalLight);
 
 // Dodajemy podłoże do cieni
-const floorGeometry = new THREE.PlaneGeometry(10, 10);
+const floorGeometry = new THREE.PlaneGeometry(20, 20); // Powiększyliśmy podłoże, żeby pasowało do większego modelu
 const floorMaterial = new THREE.ShadowMaterial({ opacity: 0.4 });
 const floor = new THREE.Mesh(floorGeometry, floorMaterial);
 floor.rotation.x = -Math.PI / 2;
-floor.position.y = -1.1;
+floor.position.y = -2.5; // Przesunęliśmy podłoże niżej, żeby pasowało do większego modelu
 floor.receiveShadow = true;
 scene.add(floor);
 
@@ -45,8 +45,8 @@ loader.load('models/model.glb', function (gltf) {
     scene.add(model);
 
     // Ustawienie pozycji modelu
-    model.position.set(0, -1, 0);
-    model.scale.set(2, 2, 2); // Powiększenie modelu 2x
+    model.position.set(0, -2, 0); // Przesunięcie modelu w dół, żeby pasował do nowego podłoża
+    model.scale.set(4, 4, 4); // **Powiększenie modelu 4x**
 
     fitCameraToObject(camera, model);
     animate();
@@ -64,7 +64,7 @@ function fitCameraToObject(camera, object) {
     const fov = camera.fov * (Math.PI / 180);
     let cameraZ = Math.abs(maxDim / Math.sin(fov / 2));
 
-    camera.position.set(center.x, center.y, cameraZ * 1.8); // Lepsze dopasowanie kamery
+    camera.position.set(center.x, center.y, cameraZ * 2.5); // Lepsze dopasowanie kamery do większego modelu
     camera.lookAt(center);
 }
 
