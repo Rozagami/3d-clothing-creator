@@ -49,27 +49,31 @@ loader.load('models/model.glb?v=28', function (gltf) {
 
 // **Funkcja do ładowania ubrań**
 function loadClothes() {
-    loader.load('models/shirt.glb?v=28', function (gltf) { // Teraz "shirt" to spodnie
-        console.log("✅ Spodnie (shirt) załadowane!");
-        shirt = gltf.scene;
+loader.load('models/shirt.glb?v=29', function (gltf) { // Spodnie = "shirt"
+    console.log("✅ Spodnie (shirt) załadowane!");
+    shirt = gltf.scene;
 
-        // **Dopasowanie skali i pozycji do postaci**
-        shirt.scale.set(1.2, 1.2, 1.2);
-        shirt.position.set(0, -1.3, 0);
+    // **Dopasowanie skali i pozycji do postaci**
+    shirt.scale.set(1.2, 1.2, 1.2);
+    shirt.position.set(0, -1.3, 0);
 
-        // **Poprawienie sposobu renderowania materiału**
-        shirt.traverse((child) => {
-            if (child.isMesh) {
-                child.material.needsUpdate = true;
-                child.material.side = THREE.DoubleSide; // Jeśli tekstura znika, renderuj dwie strony
-                child.material.transparent = false;
-                child.material.depthTest = true;
-                child.material.depthWrite = true;
-            }
-        });
-
-        modelGroup.add(shirt); // Dodajemy do grupy
+    // **Przebudowanie materiału, żeby Three.js dobrze go odczytał**
+    shirt.traverse((child) => {
+        if (child.isMesh) {
+            child.material = new THREE.MeshStandardMaterial({
+                map: child.material.map || null, // Jeśli ma teksturę, zachowujemy ją
+                normalMap: child.material.normalMap || null, // Jeśli jest normal map, używamy jej
+                metalness: 0.5, // Średnia metaliczność
+                roughness: 0.6, // Średnia szorstkość
+                side: THREE.DoubleSide, // Renderowanie obu stron, jeśli tekstura znika
+            });
+            child.material.needsUpdate = true;
+        }
     });
+
+    modelGroup.add(shirt); // Dodajemy do grupy
+});
+
 
     loader.load('models/pants.glb?v=28', function (gltf) { // Teraz "pants" to bluzka
         console.log("✅ Bluzka (pants) załadowana!");
@@ -123,5 +127,16 @@ function animate() {
 }
 
 animate();
+
+console.log("🔍 Sprawdzanie tekstury spodni...");
+if (shirt && shirt.children.length > 0) {
+    shirt.traverse((child) => {
+        if (child.isMesh && child.material.map) {
+            console.log("✅ Tekstura spodni znaleziona!", child.material.map);
+        } else {
+            console.warn("⚠️ Tekstura spodni NIE ZAŁADOWAŁA SIĘ!");
+        }
+    });
+}
 
 // **Wymuszenie aktualizacji v28**
