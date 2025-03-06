@@ -8,24 +8,24 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
 // Dodanie światła (zmniejszona intensywność)
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.2); // Bardzo delikatne światło
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8); // Zmniejszona moc światła
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
 directionalLight.position.set(3, 4, 5);
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.width = 1024;
 directionalLight.shadow.mapSize.height = 1024;
 directionalLight.shadow.camera.near = 0.5;
-directionalLight.shadow.camera.far = 20;
+directionalLight.shadow.camera.far = 50;
 scene.add(directionalLight);
 
-// Dodajemy podłoże do cieni
-const floorGeometry = new THREE.PlaneGeometry(20, 20); // Powiększyliśmy podłoże, żeby pasowało do większego modelu
-const floorMaterial = new THREE.ShadowMaterial({ opacity: 0.4 });
+// Podłoże do cieni
+const floorGeometry = new THREE.PlaneGeometry(30, 30);
+const floorMaterial = new THREE.ShadowMaterial({ opacity: 0.3 });
 const floor = new THREE.Mesh(floorGeometry, floorMaterial);
 floor.rotation.x = -Math.PI / 2;
-floor.position.y = -2.5; // Przesunęliśmy podłoże niżej, żeby pasowało do większego modelu
+floor.position.y = -5; // Dostosowane do większego modelu
 floor.receiveShadow = true;
 scene.add(floor);
 
@@ -36,18 +36,18 @@ let model;
 loader.load('models/model.glb', function (gltf) {
     console.log("✅ Model załadowany! 🎉");
     model = gltf.scene;
+
+    // Ustawienie modelu
     model.traverse((node) => {
         if (node.isMesh) {
             node.castShadow = true;
             node.receiveShadow = true;
         }
     });
+    model.scale.set(5, 5, 5); // **Powiększenie modelu 5x**
+    model.position.set(0, -4, 0); // **Przesunięcie modelu w dół**
+
     scene.add(model);
-
-    // Ustawienie pozycji modelu
-    model.position.set(0, -2, 0); // Przesunięcie modelu w dół, żeby pasował do nowego podłoża
-    model.scale.set(4, 4, 4); // **Powiększenie modelu 4x**
-
     fitCameraToObject(camera, model);
     animate();
 }, undefined, function (error) {
@@ -64,7 +64,7 @@ function fitCameraToObject(camera, object) {
     const fov = camera.fov * (Math.PI / 180);
     let cameraZ = Math.abs(maxDim / Math.sin(fov / 2));
 
-    camera.position.set(center.x, center.y, cameraZ * 2.5); // Lepsze dopasowanie kamery do większego modelu
+    camera.position.set(center.x, center.y, cameraZ * 3); // **Kamera dalej od modelu**
     camera.lookAt(center);
 }
 
@@ -73,7 +73,6 @@ let isDragging = false;
 let previousMouseX = 0;
 
 document.addEventListener("mousedown", (event) => {
-    console.log("🖱️ Mysz wciśnięta!");
     isDragging = true;
     previousMouseX = event.clientX;
 });
@@ -82,13 +81,11 @@ document.addEventListener("mousemove", (event) => {
     if (isDragging && model) {
         let deltaX = event.clientX - previousMouseX;
         model.rotation.y += deltaX * 0.005; // Wolniejsze obracanie myszką
-        console.log("🔄 Model obracany! Delta:", deltaX);
         previousMouseX = event.clientX;
     }
 });
 
 document.addEventListener("mouseup", () => {
-    console.log("🖱️ Mysz puszczona!");
     isDragging = false;
 });
 
