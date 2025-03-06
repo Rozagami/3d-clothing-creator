@@ -16,24 +16,23 @@ directionalLight.position.set(5, 5, 5);
 directionalLight.castShadow = true;
 scene.add(directionalLight);
 
-// Załadowanie modelu
+// Załadowanie modelu z wymuszoną aktualizacją
 const loader = new THREE.GLTFLoader();
 let model;
 
-loader.load('models/model.glb?v=2', function (gltf) {
+loader.load('models/model.glb?v=3', function (gltf) { // Wymuszamy nową wersję modelu
     console.log("✅ Model załadowany! 🎉");
     model = gltf.scene;
 
-    // **RESETUJEMY SKALĘ DO DOMYŚLNEJ, POTEM USTAWIAMY NOWĄ**
-    model.scale.set(1, 1, 1);  // Reset
-    model.scale.set(0.3, 0.3, 0.3); // **Zmniejszenie do 30% oryginału**
+    // **Zmniejszamy model do odpowiedniej wielkości**
+    model.scale.set(0.3, 0.3, 0.3); // Jeśli nadal za duży, zmień na (0.25, 0.25, 0.25)
     model.position.set(0, -1, 0); // Przesunięcie w dół, żeby był na środku ekranu
     
     scene.add(model);
 
-    // **Odsuwamy kamerę, żeby model był cały widoczny**
-    camera.position.set(0, 1.5, 4.5); // Kamerę przesuwamy tak, żeby objęła model
-    camera.lookAt(0, 1, 0); // Kierujemy kamerę na środek modelu
+    // **Przybliżamy kamerę, żeby model był większy na ekranie**
+    camera.position.set(0, 1.5, 4); // Kamerę ustawiamy tak, żeby objęła całą postać
+    camera.lookAt(0, 1, 0); // Kierujemy kamerę na model
 
     animate();
 }, undefined, function (error) {
@@ -71,6 +70,3 @@ function animate() {
 }
 
 animate();
-
-// Wymuszenie aktualizacji
-
