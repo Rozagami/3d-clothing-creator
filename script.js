@@ -11,7 +11,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
 // **Poprawienie kamery - oddalenie, żeby widać było całą postać**
-camera.position.set(0, 3, 10); // Jeszcze większe oddalenie
+camera.position.set(0, 3, 10);
 camera.lookAt(0, 1, 0);
 
 // Dodanie światła
@@ -23,22 +23,23 @@ directionalLight.position.set(5, 5, 5);
 directionalLight.castShadow = true;
 scene.add(directionalLight);
 
+// **Tworzymy grupę dla modelu i ubrań**
+let modelGroup = new THREE.Group();
+scene.add(modelGroup);
+
 // Zmienne globalne
 let model, pants, shirt;
 
 // **Załadowanie modelu postaci**
-loader.load('models/model.glb?v=23', function (gltf) {
+loader.load('models/model.glb?v=24', function (gltf) {
     console.log("✅ Model postaci załadowany!");
     model = gltf.scene;
 
     // **Powiększamy postać**
-    model.scale.set(1.2, 1.2, 1.2);  // Było 0.2, teraz 1.2
+    model.scale.set(1.2, 1.2, 1.2);
     model.position.set(0, -1, 0); // Podnosimy ją trochę wyżej
 
-    // **Tworzymy pusty obiekt, który będzie obracał wszystko**
-    modelGroup = new THREE.Group();
-    modelGroup.add(model);
-    scene.add(modelGroup);
+    modelGroup.add(model); // Dodajemy postać do grupy
 
     // **Załaduj ubrania dopiero po załadowaniu postaci**
     loadClothes();
@@ -46,10 +47,9 @@ loader.load('models/model.glb?v=23', function (gltf) {
     console.error("❌ Błąd ładowania modelu:", error);
 });
 
-
 // **Funkcja do ładowania ubrań**
 function loadClothes() {
-    loader.load('models/pants.glb?v=23', function (gltf) {
+    loader.load('models/pants.glb?v=24', function (gltf) {
         console.log("✅ Spodnie załadowane!");
         pants = gltf.scene;
 
@@ -60,7 +60,7 @@ function loadClothes() {
         modelGroup.add(pants); // Dodajemy ubrania do modelGroup
     });
 
-    loader.load('models/shirt.glb?v=23', function (gltf) {
+    loader.load('models/shirt.glb?v=24', function (gltf) {
         console.log("✅ Bluzka załadowana!");
         shirt = gltf.scene;
 
@@ -81,7 +81,7 @@ function toggleClothes(type) {
     }
 }
 
-// **Obracanie myszką**
+// **Obracanie myszką - obracamy całą grupę**
 let isDragging = false;
 let previousMouseX = 0;
 
@@ -91,9 +91,9 @@ document.addEventListener("mousedown", (event) => {
 });
 
 document.addEventListener("mousemove", (event) => {
-    if (isDragging && model) {
+    if (isDragging && modelGroup) { // Obracamy modelGroup zamiast samego modelu
         let deltaX = event.clientX - previousMouseX;
-        model.rotation.y += deltaX * 0.005;
+        modelGroup.rotation.y += deltaX * 0.005;
         previousMouseX = event.clientX;
     }
 });
@@ -105,12 +105,12 @@ document.addEventListener("mouseup", () => {
 // **Animacja**
 function animate() {
     requestAnimationFrame(animate);
-    if (model) {
-        model.rotation.y += 0.001;
+    if (modelGroup) {
+        modelGroup.rotation.y += 0.001; // Powolne obracanie całości
     }
     renderer.render(scene, camera);
 }
 
 animate();
 
-// **Wymuszenie aktualizacji v21**
+// **Wymuszenie aktualizacji v24**
