@@ -16,28 +16,56 @@ directionalLight.position.set(5, 5, 5);
 directionalLight.castShadow = true;
 scene.add(directionalLight);
 
-// Załadowanie modelu z wymuszoną aktualizacją
+// Załadowanie postaci
 const loader = new THREE.GLTFLoader();
 let model;
+let pants, shirt;
 
-loader.load('models/model.glb?v=10', function (gltf) { // Wymuszamy nową wersję modelu
-    console.log("✅ Model załadowany! 🎉");
+loader.load('models/model.glb?v=10', function (gltf) {
+    console.log("✅ Model postaci załadowany!");
     model = gltf.scene;
 
-    // **Zmniejszamy model do odpowiedniej wielkości**
-    model.scale.set(0.4, 0.4, 0.4); // Jeśli nadal za duży, zmień na (0.25, 0.25, 0.25)
-    model.position.set(0, -1, 0); // Przesunięcie w dół, żeby był na środku ekranu
+    // Skalowanie i pozycja
+    model.scale.set(0.4, 0.4, 0.4);
+    model.position.set(0, -1, 0);
     
     scene.add(model);
 
-    // **Przybliżamy kamerę, żeby model był większy na ekranie**
-    camera.position.set(0, 1.5, 4); // Kamerę ustawiamy tak, żeby objęła całą postać
-    camera.lookAt(0, 1, 0); // Kierujemy kamerę na model
-
-    animate();
+    // Załaduj ubrania po modelu postaci
+    loadClothes();
 }, undefined, function (error) {
     console.error("❌ Błąd ładowania modelu:", error);
 });
+
+// Funkcja do ładowania ubrań
+function loadClothes() {
+    // Załaduj spodnie
+    loader.load('models/pants.glb', function (gltf) {
+        console.log("✅ Spodnie załadowane!");
+        pants = gltf.scene;
+        pants.scale.set(0.4, 0.4, 0.4);
+        pants.position.set(0, -1, 0);
+        scene.add(pants);
+    });
+
+    // Załaduj bluzkę
+    loader.load('models/shirt.glb', function (gltf) {
+        console.log("✅ Bluzka załadowana!");
+        shirt = gltf.scene;
+        shirt.scale.set(0.4, 0.4, 0.4);
+        shirt.position.set(0, -1, 0);
+        scene.add(shirt);
+    });
+}
+
+// Funkcja do przełączania widoczności ubrań
+function toggleClothes(type) {
+    if (type === 'pants' && pants) {
+        pants.visible = !pants.visible;
+    } else if (type === 'shirt' && shirt) {
+        shirt.visible = !shirt.visible;
+    }
+}
 
 // Obracanie modelem myszką
 let isDragging = false;
@@ -70,6 +98,3 @@ function animate() {
 }
 
 animate();
-
-// Wymuszenie aktualizacji
-
