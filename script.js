@@ -71,3 +71,6 @@ function animate() {
 }
 
 animate();
+
+// Wymuszenie aktualizacji
+
