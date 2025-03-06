@@ -3,14 +3,16 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true; // Włączamy cienie
 document.body.appendChild(renderer.domElement);
 
-// Dodanie światła
-const ambientLight = new THREE.AmbientLight(0xffffff, 2);
+// Dodanie światła (zmniejszona jasność)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.8); // Zmniejszona intensywność
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
-directionalLight.position.set(2, 2, 5);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+directionalLight.position.set(3, 3, 5);
+directionalLight.castShadow = true; // Włączamy cienie
 scene.add(directionalLight);
 
 // Załadowanie modelu
@@ -20,6 +22,9 @@ let model;
 loader.load('models/model.glb', function (gltf) {
     console.log("✅ Model załadowany! 🎉");
     model = gltf.scene;
+    model.traverse((node) => {
+        if (node.isMesh) node.castShadow = true; // Model rzuca cienie
+    });
     scene.add(model);
 
     // Ustawienie pozycji modelu
@@ -74,7 +79,7 @@ document.addEventListener("mouseup", () => {
 function animate() {
     requestAnimationFrame(animate);
     if (model) {
-        model.rotation.y += 0.005; // Automatyczne obracanie
+        model.rotation.y += 0.002; // Wolniejszy obrót
     }
     renderer.render(scene, camera);
 }
