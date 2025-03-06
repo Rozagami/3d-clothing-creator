@@ -59,4 +59,21 @@ document.addEventListener("mousemove", (event) => {
     if (isDragging && model) {
         let deltaX = event.clientX - previousMouseX;
         model.rotation.y += deltaX * 0.01;
-        prev
+        previousMouseX = event.clientX;
+    }
+});
+
+document.addEventListener("mouseup", () => {
+    isDragging = false;
+});
+
+// Animacja
+function animate() {
+    requestAnimationFrame(animate);
+    if (model) {
+        model.rotation.y += 0.005; // Obrót modelu w animacji
+    }
+    renderer.render(scene, camera);
+}
+
+animate();
