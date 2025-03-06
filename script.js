@@ -3,16 +3,16 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.shadowMap.enabled = true; // Włączamy cienie
-renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Miękkie cienie
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
-// Dodanie światła (zmniejszona jasność i lepsze cienie)
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.4); // Bardziej stonowane światło otoczenia
+// Dodanie światła (zmniejszona intensywność)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.2); // Bardzo delikatne światło
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
-directionalLight.position.set(2, 4, 6);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8); // Zmniejszona moc światła
+directionalLight.position.set(3, 4, 5);
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.width = 1024;
 directionalLight.shadow.mapSize.height = 1024;
@@ -20,9 +20,9 @@ directionalLight.shadow.camera.near = 0.5;
 directionalLight.shadow.camera.far = 20;
 scene.add(directionalLight);
 
-// Dodajemy płaszczyznę, żeby cienie były widoczne
+// Dodajemy podłoże do cieni
 const floorGeometry = new THREE.PlaneGeometry(10, 10);
-const floorMaterial = new THREE.ShadowMaterial({ opacity: 0.5 });
+const floorMaterial = new THREE.ShadowMaterial({ opacity: 0.4 });
 const floor = new THREE.Mesh(floorGeometry, floorMaterial);
 floor.rotation.x = -Math.PI / 2;
 floor.position.y = -1.1;
