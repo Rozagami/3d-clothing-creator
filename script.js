@@ -10,6 +10,10 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
+// **Poprawienie kamery - oddalenie, żeby widać było całą postać**
+camera.position.set(0, 2, 7); 
+camera.lookAt(0, 1, 0);
+
 // Dodanie światła
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
 scene.add(ambientLight);
@@ -23,17 +27,17 @@ scene.add(directionalLight);
 let model, pants, shirt;
 
 // **Załadowanie modelu postaci**
-loader.load('models/model.glb?v=19', function (gltf) {
+loader.load('models/model.glb?v=21', function (gltf) {
     console.log("✅ Model postaci załadowany!");
     model = gltf.scene;
 
-    // Ustawienie skali i pozycji
-    model.scale.set(0.4, 0.4, 0.4);
-    model.position.set(0, -1, 0);
-    
+    // **Zmniejszamy model, żeby uniknąć błędów**
+    model.scale.set(0.3, 0.3, 0.3);
+    model.position.set(0, -1.5, 0); // Przesuwamy postać niżej
+
     scene.add(model);
 
-    // Załaduj ubrania dopiero po załadowaniu postaci
+    // **Załaduj ubrania dopiero po załadowaniu postaci**
     loadClothes();
 }, undefined, function (error) {
     console.error("❌ Błąd ładowania modelu:", error);
@@ -41,24 +45,24 @@ loader.load('models/model.glb?v=19', function (gltf) {
 
 // **Funkcja do ładowania ubrań**
 function loadClothes() {
-    loader.load('models/pants.glb?v=19', function (gltf) {
+    loader.load('models/pants.glb?v=21', function (gltf) {
         console.log("✅ Spodnie załadowane!");
         pants = gltf.scene;
 
-        // Skopiowanie skali i pozycji z postaci
-        pants.scale.copy(model.scale);
-        pants.position.copy(model.position);
+        // **Dopasowanie skali i pozycji do postaci**
+        pants.scale.set(0.3, 0.3, 0.3);
+        pants.position.set(0, -1.5, 0);
 
         scene.add(pants);
     });
 
-    loader.load('models/shirt.glb?v=19', function (gltf) {
+    loader.load('models/shirt.glb?v=21', function (gltf) {
         console.log("✅ Bluzka załadowana!");
         shirt = gltf.scene;
 
-        // Skopiowanie skali i pozycji z postaci
-        shirt.scale.copy(model.scale);
-        shirt.position.copy(model.position);
+        // **Dopasowanie skali i pozycji do postaci**
+        shirt.scale.set(0.3, 0.3, 0.3);
+        shirt.position.set(0, -1.5, 0);
 
         scene.add(shirt);
     });
@@ -105,4 +109,4 @@ function animate() {
 
 animate();
 
-// Wymuszenie aktualizacji v19
+// **Wymuszenie aktualizacji v21**
