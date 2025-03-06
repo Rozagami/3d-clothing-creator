@@ -4,16 +4,30 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true; // Włączamy cienie
+renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Miękkie cienie
 document.body.appendChild(renderer.domElement);
 
-// Dodanie światła (zmniejszona jasność)
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.8); // Zmniejszona intensywność
+// Dodanie światła (zmniejszona jasność i lepsze cienie)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.4); // Bardziej stonowane światło otoczenia
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-directionalLight.position.set(3, 3, 5);
-directionalLight.castShadow = true; // Włączamy cienie
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+directionalLight.position.set(2, 4, 6);
+directionalLight.castShadow = true;
+directionalLight.shadow.mapSize.width = 1024;
+directionalLight.shadow.mapSize.height = 1024;
+directionalLight.shadow.camera.near = 0.5;
+directionalLight.shadow.camera.far = 20;
 scene.add(directionalLight);
+
+// Dodajemy płaszczyznę, żeby cienie były widoczne
+const floorGeometry = new THREE.PlaneGeometry(10, 10);
+const floorMaterial = new THREE.ShadowMaterial({ opacity: 0.5 });
+const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+floor.rotation.x = -Math.PI / 2;
+floor.position.y = -1.1;
+floor.receiveShadow = true;
+scene.add(floor);
 
 // Załadowanie modelu
 const loader = new THREE.GLTFLoader();
@@ -23,7 +37,10 @@ loader.load('models/model.glb', function (gltf) {
     console.log("✅ Model załadowany! 🎉");
     model = gltf.scene;
     model.traverse((node) => {
-        if (node.isMesh) node.castShadow = true; // Model rzuca cienie
+        if (node.isMesh) {
+            node.castShadow = true;
+            node.receiveShadow = true;
+        }
     });
     scene.add(model);
 
