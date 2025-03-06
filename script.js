@@ -46,7 +46,7 @@ loader.load('models/model.glb', function (gltf) {
 
     // Ustawienie pozycji modelu
     model.position.set(0, -1, 0);
-    model.scale.set(1, 1, 1);
+    model.scale.set(2, 2, 2); // Powiększenie modelu 2x
 
     fitCameraToObject(camera, model);
     animate();
@@ -64,7 +64,7 @@ function fitCameraToObject(camera, object) {
     const fov = camera.fov * (Math.PI / 180);
     let cameraZ = Math.abs(maxDim / Math.sin(fov / 2));
 
-    camera.position.set(center.x, center.y, cameraZ * 1.5);
+    camera.position.set(center.x, center.y, cameraZ * 1.8); // Lepsze dopasowanie kamery
     camera.lookAt(center);
 }
 
@@ -81,7 +81,7 @@ document.addEventListener("mousedown", (event) => {
 document.addEventListener("mousemove", (event) => {
     if (isDragging && model) {
         let deltaX = event.clientX - previousMouseX;
-        model.rotation.y += deltaX * 0.01;
+        model.rotation.y += deltaX * 0.005; // Wolniejsze obracanie myszką
         console.log("🔄 Model obracany! Delta:", deltaX);
         previousMouseX = event.clientX;
     }
@@ -96,7 +96,7 @@ document.addEventListener("mouseup", () => {
 function animate() {
     requestAnimationFrame(animate);
     if (model) {
-        model.rotation.y += 0.002; // Wolniejszy obrót
+        model.rotation.y += 0.001; // Wolniejszy automatyczny obrót
     }
     renderer.render(scene, camera);
 }
