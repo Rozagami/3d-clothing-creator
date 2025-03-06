@@ -7,11 +7,11 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
-// Dodanie światła (zmniejszona intensywność)
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+// Dodanie światła
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
 directionalLight.position.set(5, 5, 5);
 directionalLight.castShadow = true;
 scene.add(directionalLight);
@@ -24,30 +24,18 @@ loader.load('models/model.glb', function (gltf) {
     console.log("✅ Model załadowany! 🎉");
     model = gltf.scene;
 
-    // **Model jest teraz duży, więc zmniejszamy go w Three.js**
-    model.scale.set(5, 5, 5); // Możesz zmienić na (4,4,4) jeśli nadal jest za duży
-    model.position.set(0, -5, 0); // Przesuwamy go w dół, żeby był widoczny
+    // **Wymuszamy dużą skalę, żeby model nie był za mały**
+    model.scale.set(10, 10, 10); // Możesz zwiększyć na (20,20,20), jeśli nadal będzie niewidoczny
+    model.position.set(0, -2, 0); // Ustawienie modelu na środku
     
     scene.add(model);
-    fitCameraToObject(camera, model);
+    camera.position.set(0, 0, 10); // **Ustawienie kamery blisko modelu**
+    camera.lookAt(0, 0, 0); // **Pewność, że kamera patrzy na środek sceny**
+
     animate();
 }, undefined, function (error) {
     console.error("❌ Błąd ładowania modelu:", error);
 });
-
-// Automatyczne dopasowanie kamery do modelu
-function fitCameraToObject(camera, object) {
-    const boundingBox = new THREE.Box3().setFromObject(object);
-    const center = boundingBox.getCenter(new THREE.Vector3());
-    const size = boundingBox.getSize(new THREE.Vector3());
-
-    const maxDim = Math.max(size.x, size.y, size.z);
-    const fov = camera.fov * (Math.PI / 180);
-    let cameraZ = Math.abs(maxDim / Math.sin(fov / 2));
-
-    camera.position.set(center.x, center.y, cameraZ * 5); // **Przybliżamy kamerę tak, żeby model był widoczny**
-    camera.lookAt(center);
-}
 
 // Obracanie modelem myszką
 let isDragging = false;
