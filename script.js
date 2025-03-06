@@ -1,4 +1,5 @@
-const loader = new THREE.GLTFLoader(); // Deklaracja loadera
+// **Deklaracja loadera GLTF (MUSI BYĆ NA SAMEJ GÓRZE!)**
+const loader = new THREE.GLTFLoader();
 
 // Inicjalizacja sceny
 const scene = new THREE.Scene();
@@ -18,13 +19,11 @@ directionalLight.position.set(5, 5, 5);
 directionalLight.castShadow = true;
 scene.add(directionalLight);
 
-// **DODANE: Deklaracja loadera dla Three.js**
-const loader = new THREE.GLTFLoader();
-
-// Załaduj postać
+// Zmienne globalne
 let model, pants, shirt;
 
-loader.load('models/model.glb?v=16', function (gltf) {
+// **Załadowanie modelu postaci**
+loader.load('models/model.glb?v=17', function (gltf) {
     console.log("✅ Model postaci załadowany!");
     model = gltf.scene;
 
@@ -40,9 +39,9 @@ loader.load('models/model.glb?v=16', function (gltf) {
     console.error("❌ Błąd ładowania modelu:", error);
 });
 
-// Funkcja do ładowania ubrań
+// **Funkcja do ładowania ubrań**
 function loadClothes() {
-    loader.load('models/pants.glb?v=16', function (gltf) {
+    loader.load('models/pants.glb?v=17', function (gltf) {
         console.log("✅ Spodnie załadowane!");
         pants = gltf.scene;
 
@@ -53,7 +52,7 @@ function loadClothes() {
         scene.add(pants);
     });
 
-    loader.load('models/shirt.glb?v=16', function (gltf) {
+    loader.load('models/shirt.glb?v=17', function (gltf) {
         console.log("✅ Bluzka załadowana!");
         shirt = gltf.scene;
 
@@ -65,7 +64,7 @@ function loadClothes() {
     });
 }
 
-// Funkcja do przełączania widoczności ubrań
+// **Funkcja do przełączania widoczności ubrań**
 function toggleClothes(type) {
     if (type === 'pants' && pants) {
         pants.visible = !pants.visible;
@@ -74,7 +73,7 @@ function toggleClothes(type) {
     }
 }
 
-// Obracanie myszką
+// **Obracanie myszką**
 let isDragging = false;
 let previousMouseX = 0;
 
@@ -95,7 +94,7 @@ document.addEventListener("mouseup", () => {
     isDragging = false;
 });
 
-// Animacja
+// **Animacja**
 function animate() {
     requestAnimationFrame(animate);
     if (model) {
