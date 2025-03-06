@@ -1,4 +1,4 @@
-// **Deklaracja loadera GLTF**
+// **Deklaracja loadera GLTF (MUSI BYĆ TYLKO JEDNA!)**
 const loader = new THREE.GLTFLoader();
 
 // Inicjalizacja sceny
@@ -23,7 +23,7 @@ scene.add(directionalLight);
 let model, pants, shirt;
 
 // **Załadowanie modelu postaci**
-loader.load('models/model.glb?v=18', function (gltf) {
+loader.load('models/model.glb?v=19', function (gltf) {
     console.log("✅ Model postaci załadowany!");
     model = gltf.scene;
 
@@ -41,7 +41,7 @@ loader.load('models/model.glb?v=18', function (gltf) {
 
 // **Funkcja do ładowania ubrań**
 function loadClothes() {
-    loader.load('models/pants.glb?v=18', function (gltf) {
+    loader.load('models/pants.glb?v=19', function (gltf) {
         console.log("✅ Spodnie załadowane!");
         pants = gltf.scene;
 
@@ -52,7 +52,7 @@ function loadClothes() {
         scene.add(pants);
     });
 
-    loader.load('models/shirt.glb?v=18', function (gltf) {
+    loader.load('models/shirt.glb?v=19', function (gltf) {
         console.log("✅ Bluzka załadowana!");
         shirt = gltf.scene;
 
@@ -105,4 +105,4 @@ function animate() {
 
 animate();
 
-// Wymuszenie aktualizacji v18
+// Wymuszenie aktualizacji v19
