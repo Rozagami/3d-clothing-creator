@@ -1,5 +1,5 @@
 // Sprawdzamy, czy Three.js jest poprawnie załadowane
-console.log("✅ Three.js działa!", THREE);
+console.log("✅ Three.js załadowane:", THREE);
 
 // Inicjalizacja sceny
 const scene = new THREE.Scene();
@@ -11,9 +11,6 @@ document.body.appendChild(renderer.domElement);
 // Dodanie światła
 const light = new THREE.AmbientLight(0xffffff);
 scene.add(light);
-
-// Ustawienie kamery
-camera.position.z = 3;
 
 // Sprawdzenie, czy GLTFLoader działa
 console.log("✅ Próba załadowania modelu...");
