@@ -40,23 +40,23 @@ loader.load('models/model.glb?v=10', function (gltf) {
 // Funkcja do ładowania ubrań
 function loadClothes() {
     // Załaduj spodnie
-    loader.load('models/pants.glb', function (gltf) {
-        console.log("✅ Spodnie załadowane!");
-        pants = gltf.scene;
-        pants.scale.set(0.4, 0.4, 0.4);
-        pants.position.set(0, -1, 0);
-        scene.add(pants);
-    });
+loader.load('models/pants.glb?v=12', function (gltf) { // Wymuszenie nowej wersji
+    console.log("✅ Spodnie załadowane!");
+    pants = gltf.scene;
+    pants.scale.set(0.4, 0.4, 0.4);
+    pants.position.set(0, -1, 0);
+    scene.add(pants);
+});
 
-    // Załaduj bluzkę
-    loader.load('models/shirt.glb', function (gltf) {
-        console.log("✅ Bluzka załadowana!");
-        shirt = gltf.scene;
-        shirt.scale.set(0.4, 0.4, 0.4);
-        shirt.position.set(0, -1, 0);
-        scene.add(shirt);
-    });
-}
+// Załaduj bluzkę
+loader.load('models/shirt.glb?v=12', function (gltf) { // Wymuszenie nowej wersji
+    console.log("✅ Bluzka załadowana!");
+    shirt = gltf.scene;
+    shirt.scale.set(0.4, 0.4, 0.4);
+    shirt.position.set(0, -1, 0);
+    scene.add(shirt);
+});
+
 
 // Funkcja do przełączania widoczności ubrań
 function toggleClothes(type) {
