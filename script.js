@@ -25,7 +25,7 @@ loader.load('models/model.glb?v=3', function (gltf) { // Wymuszamy nową wersję
     model = gltf.scene;
 
     // **Zmniejszamy model do odpowiedniej wielkości**
-    model.scale.set(0.3, 0.3, 0.3); // Jeśli nadal za duży, zmień na (0.25, 0.25, 0.25)
+    model.scale.set(0.4, 0.4, 0.4); // Jeśli nadal za duży, zmień na (0.25, 0.25, 0.25)
     model.position.set(0, -1, 0); // Przesunięcie w dół, żeby był na środku ekranu
     
     scene.add(model);
@@ -70,3 +70,6 @@ function animate() {
 }
 
 animate();
+
+// Wymuszenie aktualizacji
+
