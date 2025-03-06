@@ -25,7 +25,7 @@ loader.load('models/model.glb', function (gltf) {
     model = gltf.scene;
 
     // **Zmniejszamy model, żeby nie był za duży**
-    model.scale.set(0.3, 0.3, 0.3); // Jeśli nadal za duży, zmień na (0.25, 0.25, 0.25)
+    model.scale.set(0.2, 0.2, 0.2); // Jeśli nadal za duży, zmień na (0.25, 0.25, 0.25)
     model.position.set(0, -1, 0); // Przesunięcie w dół, żeby był na środku ekranu
     
     scene.add(model);
