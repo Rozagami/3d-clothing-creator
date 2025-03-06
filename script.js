@@ -1,6 +1,6 @@
-// Importujemy Three.js oraz GLTFLoader poprawnie jako moduły
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js';
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/loaders/GLTFLoader.js';
+// Importujemy Three.js i GLTFLoader z pełnymi ścieżkami URL
+import * as THREE from 'https://unpkg.com/three@0.128.0/build/three.module.js';
+import { GLTFLoader } from 'https://unpkg.com/three@0.128.0/examples/jsm/loaders/GLTFLoader.js';
 
 // Inicjalizacja sceny
 const scene = new THREE.Scene();
