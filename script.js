@@ -9,14 +9,14 @@ document.body.appendChild(renderer.domElement);
 const light = new THREE.AmbientLight(0xffffff);
 scene.add(light);
 
-// Test - sprawdzenie czy Three.js działa
-console.log("Three.js działa!");
+// Sprawdzenie, czy Three.js działa
+console.log("✅ Three.js działa!");
 
-// Sprawdzenie kamery
+// Ustawienie kamery
 camera.position.z = 3;
 
 // Loader do wczytania modelu 3D
-const loader = new THREE.GLTFLoader();
+const loader = new GLTFLoader();
 loader.load('./models/model.glb', function (gltf) {
     console.log("✅ Model załadowany!");  // Potwierdzenie, że model się wczytał
     scene.add(gltf.scene);
