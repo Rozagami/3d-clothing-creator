@@ -1,5 +1,3 @@
-// Używamy globalnego THREE i GLTFLoader, które załadowaliśmy w index.html
-
 // Inicjalizacja sceny
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -16,6 +14,9 @@ console.log("✅ Three.js działa!");
 
 // Ustawienie kamery
 camera.position.z = 3;
+
+// Sprawdzenie, czy GLTFLoader działa
+console.log("✅ Próba załadowania modelu...");
 
 // Loader do wczytania modelu 3D
 const loader = new THREE.GLTFLoader();
