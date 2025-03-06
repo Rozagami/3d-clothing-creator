@@ -1,5 +1,5 @@
 // Sprawdzamy, czy Three.js jest poprawnie załadowane
-console.log("✅ Three.js załadowane:", THREE);
+console.log("✅ Three.js działa!", THREE);
 
 // Inicjalizacja sceny
 const scene = new THREE.Scene();

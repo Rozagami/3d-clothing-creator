@@ -14,7 +14,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 
-    <!-- Uruchamiamy nasz skrypt po załadowaniu Three.js -->
-    <script src="script.js"></script>
+    <!-- Uruchamiamy nasz skrypt PO ZAŁADOWANIU Three.js -->
+    <script>
+        window.onload = function () {
+            console.log("✅ Three.js i GLTFLoader załadowane!");
+            const script = document.createElement("script");
+            script.src = "script.js";
+            document.body.appendChild(script);
+        };
+    </script>
 </body>
 </html>
