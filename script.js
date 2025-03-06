@@ -5,20 +5,25 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// Dodanie światła
+// Dodanie światła (bez tego model może być czarny)
 const light = new THREE.AmbientLight(0xffffff);
 scene.add(light);
 
-// Ładowanie modelu 3D
+// Test - sprawdzenie czy Three.js działa
+console.log("Three.js działa!");
+
+// Sprawdzenie kamery
+camera.position.z = 3;
+
+// Loader do wczytania modelu 3D
 const loader = new THREE.GLTFLoader();
 loader.load('./models/model.glb', function (gltf) {
-    console.log("Model został wczytany!");
+    console.log("✅ Model załadowany!");  // Potwierdzenie, że model się wczytał
     scene.add(gltf.scene);
     gltf.scene.position.set(0, -1, 0);
-    camera.position.z = 3;
     animate();
 }, undefined, function (error) {
-    console.error("Błąd ładowania modelu:", error);
+    console.error("❌ Błąd ładowania modelu:", error);
 });
 
 // Animacja
