@@ -24,10 +24,10 @@ loader.load('models/model.glb', function (gltf) {
     console.log("✅ Model załadowany! 🎉");
     model = gltf.scene;
 
-    // **Wymuszamy skalowanie modelu BEZPOŚREDNIO**
-    model.scale.setScalar(10); // **Model 10x większy**
-    model.position.set(0, -5, 0); // **Przesuwamy go niżej**
-
+    // **Model jest teraz duży, więc zmniejszamy go w Three.js**
+    model.scale.set(5, 5, 5); // Możesz zmienić na (4,4,4) jeśli nadal jest za duży
+    model.position.set(0, -5, 0); // Przesuwamy go w dół, żeby był widoczny
+    
     scene.add(model);
     fitCameraToObject(camera, model);
     animate();
@@ -45,7 +45,7 @@ function fitCameraToObject(camera, object) {
     const fov = camera.fov * (Math.PI / 180);
     let cameraZ = Math.abs(maxDim / Math.sin(fov / 2));
 
-    camera.position.set(center.x, center.y, cameraZ * 3);
+    camera.position.set(center.x, center.y, cameraZ * 5); // **Przybliżamy kamerę tak, żeby model był widoczny**
     camera.lookAt(center);
 }
 
