@@ -28,16 +28,16 @@ let modelGroup = new THREE.Group();
 scene.add(modelGroup);
 
 // Zmienne globalne
-let model, pants, shirt;
+let model, pants, shirt; // Zmienione nazwy!
 
 // **Załadowanie modelu postaci**
-loader.load('models/model.glb?v=24', function (gltf) {
+loader.load('models/model.glb?v=28', function (gltf) {
     console.log("✅ Model postaci załadowany!");
     model = gltf.scene;
 
     // **Powiększamy postać**
     model.scale.set(1.2, 1.2, 1.2);
-    model.position.set(0, -1, 0); // Podnosimy ją trochę wyżej
+    model.position.set(0, -1.3, 0); // Podnosimy postać
 
     modelGroup.add(model); // Dodajemy postać do grupy
 
@@ -49,26 +49,37 @@ loader.load('models/model.glb?v=24', function (gltf) {
 
 // **Funkcja do ładowania ubrań**
 function loadClothes() {
-    loader.load('models/pants.glb?v=24', function (gltf) {
-        console.log("✅ Spodnie załadowane!");
-        pants = gltf.scene;
-
-        // **Dopasowanie skali i pozycji do postaci**
-        pants.scale.set(1.2, 1.2, 1.2);
-        pants.position.set(0, -1, 0);
-
-        modelGroup.add(pants); // Dodajemy ubrania do modelGroup
-    });
-
-    loader.load('models/shirt.glb?v=24', function (gltf) {
-        console.log("✅ Bluzka załadowana!");
+    loader.load('models/shirt.glb?v=28', function (gltf) { // Teraz "shirt" to spodnie
+        console.log("✅ Spodnie (shirt) załadowane!");
         shirt = gltf.scene;
 
         // **Dopasowanie skali i pozycji do postaci**
         shirt.scale.set(1.2, 1.2, 1.2);
-        shirt.position.set(0, -1, 0);
+        shirt.position.set(0, -1.3, 0);
 
-        modelGroup.add(shirt); // Dodajemy ubrania do modelGroup
+        // **Poprawienie sposobu renderowania materiału**
+        shirt.traverse((child) => {
+            if (child.isMesh) {
+                child.material.needsUpdate = true;
+                child.material.side = THREE.DoubleSide; // Jeśli tekstura znika, renderuj dwie strony
+                child.material.transparent = false;
+                child.material.depthTest = true;
+                child.material.depthWrite = true;
+            }
+        });
+
+        modelGroup.add(shirt); // Dodajemy do grupy
+    });
+
+    loader.load('models/pants.glb?v=28', function (gltf) { // Teraz "pants" to bluzka
+        console.log("✅ Bluzka (pants) załadowana!");
+        pants = gltf.scene;
+
+        // **Dopasowanie skali i pozycji do postaci**
+        pants.scale.set(1.2, 1.2, 1.2);
+        pants.position.set(0, -1.3, 0);
+
+        modelGroup.add(pants); // Dodajemy do grupy
     });
 }
 
@@ -113,4 +124,4 @@ function animate() {
 
 animate();
 
-// **Wymuszenie aktualizacji v24**
+// **Wymuszenie aktualizacji v28**
