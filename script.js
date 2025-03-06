@@ -25,7 +25,7 @@ loader.load('models/model.glb', function (gltf) {
     model = gltf.scene;
 
     // **Wymuszamy zmianę skali - resetujemy i ustawiamy nową wartość**
-    model.scale.setScalar(0.3); // **Ustawienie skali 0.3x - zmniejszenie modelu**
+    model.scale.setScalar(0.1); // **Ustawienie skali 0.3x - zmniejszenie modelu**
 
     model.position.set(0, -1, 0); // Przesunięcie w dół, żeby był na środku
     
