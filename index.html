@@ -49,13 +49,14 @@
 
     <!-- Uruchamiamy nasz skrypt PO ZAŁADOWANIU Three.js -->
     <script>
-        window.onload = function () {
-            console.log("✅ Three.js i GLTFLoader załadowane!");
-            const script = document.createElement("script");
-            script.src = "script.js";
-            document.body.appendChild(script);
-        };
-    </script>
+    window.onload = function () {
+        console.log("✅ Three.js i GLTFLoader załadowane!");
+        const script = document.createElement("script");
+        script.src = "script.js?v=16";  // Zmieniamy wersję!
+        document.body.appendChild(script);
+    };
+</script>
+
 
 </body>
 </html>
