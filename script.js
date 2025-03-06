@@ -11,7 +11,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
 // **Poprawienie kamery - oddalenie, żeby widać było całą postać**
-camera.position.set(0, 2, 7); 
+camera.position.set(0, 3, 10); // Jeszcze większe oddalenie
 camera.lookAt(0, 1, 0);
 
 // Dodanie światła
@@ -27,12 +27,12 @@ scene.add(directionalLight);
 let model, pants, shirt;
 
 // **Załadowanie modelu postaci**
-loader.load('models/model.glb?v=21', function (gltf) {
+loader.load('models/model.glb?v=22', function (gltf) {
     console.log("✅ Model postaci załadowany!");
     model = gltf.scene;
 
-    // **Zmniejszamy model, żeby uniknąć błędów**
-    model.scale.set(0.3, 0.3, 0.3);
+    // **Zmniejszamy model bardziej**
+    model.scale.set(0.2, 0.2, 0.2);
     model.position.set(0, -1.5, 0); // Przesuwamy postać niżej
 
     scene.add(model);
@@ -45,24 +45,24 @@ loader.load('models/model.glb?v=21', function (gltf) {
 
 // **Funkcja do ładowania ubrań**
 function loadClothes() {
-    loader.load('models/pants.glb?v=21', function (gltf) {
+    loader.load('models/pants.glb?v=22', function (gltf) {
         console.log("✅ Spodnie załadowane!");
         pants = gltf.scene;
 
-        // **Dopasowanie skali i pozycji do postaci**
-        pants.scale.set(0.3, 0.3, 0.3);
+        // **Zmniejszamy i ustawiamy spodnie niżej**
+        pants.scale.set(0.2, 0.2, 0.2);
         pants.position.set(0, -1.5, 0);
 
         scene.add(pants);
     });
 
-    loader.load('models/shirt.glb?v=21', function (gltf) {
+    loader.load('models/shirt.glb?v=22', function (gltf) {
         console.log("✅ Bluzka załadowana!");
         shirt = gltf.scene;
 
-        // **Dopasowanie skali i pozycji do postaci**
-        shirt.scale.set(0.3, 0.3, 0.3);
-        shirt.position.set(0, -1.5, 0);
+        // **Zmniejszamy i ustawiamy bluzkę wyżej**
+        shirt.scale.set(0.2, 0.2, 0.2);
+        shirt.position.set(0, -1.2, 0);
 
         scene.add(shirt);
     });
