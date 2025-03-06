@@ -24,13 +24,15 @@ loader.load('models/model.glb', function (gltf) {
     console.log("✅ Model załadowany! 🎉");
     model = gltf.scene;
 
-    // **Wymuszamy dużą skalę, żeby model nie był za mały**
-    model.scale.set(10, 10, 10); // Możesz zwiększyć na (20,20,20), jeśli nadal będzie niewidoczny
-    model.position.set(0, -2, 0); // Ustawienie modelu na środku
+    // **Zmniejszamy model do odpowiedniej wielkości**
+    model.scale.set(2, 2, 2); // Jeśli nadal jest za duża, zmień na (1.5, 1.5, 1.5) 
+    model.position.set(0, -1, 0); // Przesuwamy go w dół, żeby był na środku ekranu
     
     scene.add(model);
-    camera.position.set(0, 0, 10); // **Ustawienie kamery blisko modelu**
-    camera.lookAt(0, 0, 0); // **Pewność, że kamera patrzy na środek sceny**
+
+    // **Ustawiamy kamerę, żeby obejmowała całą postać**
+    camera.position.set(0, 1, 5); // Odsuwamy kamerę, żeby model był cały widoczny
+    camera.lookAt(0, 1, 0); // Kierujemy kamerę na środek modelu
 
     animate();
 }, undefined, function (error) {
