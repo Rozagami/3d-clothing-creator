@@ -1,6 +1,4 @@
-// Importujemy Three.js i GLTFLoader z pełnymi ścieżkami URL
-import * as THREE from 'https://unpkg.com/three@0.128.0/build/three.module.js';
-import { GLTFLoader } from 'https://unpkg.com/three@0.128.0/examples/jsm/loaders/GLTFLoader.js';
+// Używamy globalnego THREE i GLTFLoader, które załadowaliśmy w index.html
 
 // Inicjalizacja sceny
 const scene = new THREE.Scene();
@@ -20,7 +18,7 @@ console.log("✅ Three.js działa!");
 camera.position.z = 3;
 
 // Loader do wczytania modelu 3D
-const loader = new GLTFLoader();
+const loader = new THREE.GLTFLoader();
 loader.load('./models/model.glb', function (gltf) {
     console.log("✅ Model załadowany!");  // Potwierdzenie, że model się wczytał
     scene.add(gltf.scene);
