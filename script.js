@@ -104,3 +104,6 @@ function animate() {
 }
 
 animate();
+
+// Wymuszenie aktualizacji v18
+
