@@ -27,15 +27,18 @@ scene.add(directionalLight);
 let model, pants, shirt;
 
 // **Załadowanie modelu postaci**
-loader.load('models/model.glb?v=22', function (gltf) {
+loader.load('models/model.glb?v=23', function (gltf) {
     console.log("✅ Model postaci załadowany!");
     model = gltf.scene;
 
-    // **Zmniejszamy model bardziej**
-    model.scale.set(0.2, 0.2, 0.2);
-    model.position.set(0, -1.5, 0); // Przesuwamy postać niżej
+    // **Powiększamy postać**
+    model.scale.set(1.2, 1.2, 1.2);  // Było 0.2, teraz 1.2
+    model.position.set(0, -1, 0); // Podnosimy ją trochę wyżej
 
-    scene.add(model);
+    // **Tworzymy pusty obiekt, który będzie obracał wszystko**
+    modelGroup = new THREE.Group();
+    modelGroup.add(model);
+    scene.add(modelGroup);
 
     // **Załaduj ubrania dopiero po załadowaniu postaci**
     loadClothes();
@@ -43,28 +46,29 @@ loader.load('models/model.glb?v=22', function (gltf) {
     console.error("❌ Błąd ładowania modelu:", error);
 });
 
+
 // **Funkcja do ładowania ubrań**
 function loadClothes() {
-    loader.load('models/pants.glb?v=22', function (gltf) {
+    loader.load('models/pants.glb?v=23', function (gltf) {
         console.log("✅ Spodnie załadowane!");
         pants = gltf.scene;
 
-        // **Zmniejszamy i ustawiamy spodnie niżej**
-        pants.scale.set(0.2, 0.2, 0.2);
-        pants.position.set(0, -1.5, 0);
+        // **Dopasowanie skali i pozycji do postaci**
+        pants.scale.set(1.2, 1.2, 1.2);
+        pants.position.set(0, -1, 0);
 
-        scene.add(pants);
+        modelGroup.add(pants); // Dodajemy ubrania do modelGroup
     });
 
-    loader.load('models/shirt.glb?v=22', function (gltf) {
+    loader.load('models/shirt.glb?v=23', function (gltf) {
         console.log("✅ Bluzka załadowana!");
         shirt = gltf.scene;
 
-        // **Zmniejszamy i ustawiamy bluzkę wyżej**
-        shirt.scale.set(0.2, 0.2, 0.2);
-        shirt.position.set(0, -1.2, 0);
+        // **Dopasowanie skali i pozycji do postaci**
+        shirt.scale.set(1.2, 1.2, 1.2);
+        shirt.position.set(0, -1, 0);
 
-        scene.add(shirt);
+        modelGroup.add(shirt); // Dodajemy ubrania do modelGroup
     });
 }
 
