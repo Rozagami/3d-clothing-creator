@@ -8,7 +8,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
 // Dodanie światła
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
 scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
@@ -24,14 +24,14 @@ loader.load('models/model.glb', function (gltf) {
     console.log("✅ Model załadowany! 🎉");
     model = gltf.scene;
 
-    // **Powiększamy model 50x, żeby na pewno był widoczny**
-    model.scale.set(0.5, 0.5, 0.5); // Jeśli nadal za mały, zwiększ na (1,1,1)
+    // **Turbo powiększenie modelu**
+    model.scale.set(2, 2, 2); // Jeśli nadal za mały, zwiększ na (3,3,3) lub więcej
     model.position.set(0, -1, 0); // Przesunięcie w dół, żeby był na środku
     
     scene.add(model);
 
-    // **Dopasowanie kamery, żeby model był cały widoczny**
-    camera.position.set(0, 1, 5); // Kamerę odsuwamy od modelu
+    // **Dopasowanie kamery, żeby model był dobrze widoczny**
+    camera.position.set(0, 1, 6); // Kamerę odsuwamy, żeby obejmowała całość
     camera.lookAt(0, 1, 0); // Skierowanie kamery na model
 
     animate();
