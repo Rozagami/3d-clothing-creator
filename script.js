@@ -51,6 +51,7 @@ let isDragging = false;
 let previousMouseX = 0;
 
 document.addEventListener("mousedown", (event) => {
+    console.log("🖱️ Mysz wciśnięta!");
     isDragging = true;
     previousMouseX = event.clientX;
 });
@@ -59,11 +60,13 @@ document.addEventListener("mousemove", (event) => {
     if (isDragging && model) {
         let deltaX = event.clientX - previousMouseX;
         model.rotation.y += deltaX * 0.01;
+        console.log("🔄 Model obracany! Delta:", deltaX);
         previousMouseX = event.clientX;
     }
 });
 
 document.addEventListener("mouseup", () => {
+    console.log("🖱️ Mysz puszczona!");
     isDragging = false;
 });
 
@@ -71,7 +74,7 @@ document.addEventListener("mouseup", () => {
 function animate() {
     requestAnimationFrame(animate);
     if (model) {
-        model.rotation.y += 0.005; // Obrót modelu w animacji
+        model.rotation.y += 0.005; // Automatyczne obracanie
     }
     renderer.render(scene, camera);
 }
